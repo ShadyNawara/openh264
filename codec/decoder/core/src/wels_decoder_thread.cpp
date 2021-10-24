@@ -248,6 +248,8 @@ int SemWait (SWelsDecSemphore* s, int32_t timeout) {
         getTimespecFromTimeout (&ts, timeout);
 #if defined(__APPLE__)
         rc = pthread_cond_timedwait (& (s->e), & (s->m), &ts);
+#elif defined(__EMSCRIPTEN__)
+    return 0;
 #else
         rc = sem_timedwait (s->e, &ts);
         if (rc != 0) rc = errno;

@@ -55,7 +55,7 @@ endif
 ifeq ($(BUILDTYPE), Release)
 CFLAGS += $(CFLAGS_OPT)
 CFLAGS += -DNDEBUG
-USE_ASM = No
+USE_ASM = Yes
 ifeq ($(DEBUGSYMBOLS), True)
 CFLAGS += -g
 CXXFLAGS += -g

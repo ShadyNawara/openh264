@@ -232,7 +232,7 @@ WELS_THREAD_ERROR_CODE    WelsThreadCreate (WELS_THREAD_HANDLE* thread,  LPWELS_
   err = pthread_attr_init (&at);
   if (err)
     return err;
-#if !defined(__ANDROID__) && !defined(__Fuchsia__)
+#if !defined(__ANDROID__) && !defined(__Fuchsia__) && !defined(__EMSCRIPTEN__)
   err = pthread_attr_setscope (&at, PTHREAD_SCOPE_SYSTEM);
   if (err)
     return err;
@@ -368,6 +368,8 @@ WELS_THREAD_ERROR_CODE    WelsEventWaitWithTimeOut (WELS_EVENT* event, uint32_t 
 
 #if defined(__APPLE__)
     return pthread_cond_timedwait (event, pMutex, &ts);
+#elif defined(__EMSCRIPTEN__)
+    return 0;
 #else
     return sem_timedwait (*event, &ts);
 #endif
